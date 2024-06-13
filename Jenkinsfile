@@ -49,7 +49,7 @@ pipeline {
         stage('Unit Tests') {
             steps {
                 script {
-                    def isRunning = sh(script: 'docker ps | grep webapps', returnStatus: true)
+                    def isRunning = sh(script: 'docker ps | grep webapp', returnStatus: true)
                     if (isRunning == 0) {
                         echo 'Le conteneur webapp est en cours d\'exécution'
                     } else {
