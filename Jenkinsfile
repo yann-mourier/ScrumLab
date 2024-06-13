@@ -47,18 +47,10 @@ pipeline {
 
     post {
         success {
-            emailext (
-                subject: 'Build Success',
-                body: 'The build was successful!',
-                to: 'yann.mourier26@gmail.com'
-            )
+            mail bcc: '', body: 'The build was successful !', subject: 'Build Success !', to: 'yann.mourier26@gmail.com'
         }
         failure {
-            emailext (
-                subject: 'Build Failed',
-                body: 'The build failed. Please check the Jenkins console output for more details.',
-                to: 'yann.mourier26@gmail.com'
-            )
+            mail bcc: '', body: 'The build failed. Please check the Jenkins console output for more details.', subject: 'Build Failed !', to: 'yann.mourier26@gmail.com'
         }
     }
     triggers {
