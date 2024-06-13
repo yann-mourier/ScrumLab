@@ -47,10 +47,8 @@ pipeline {
 
     post {
         always {
-            node('any') {
                 cleanWs()
             }
-        }
         success {
             emailext body: 'The build was successful!',
                      subject: 'Build Success',
@@ -62,7 +60,6 @@ pipeline {
                      to: 'yann.mourier26@gmail.com'
         }
     }
-    
     triggers {
         githubPush()
     }
