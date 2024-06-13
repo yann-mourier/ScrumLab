@@ -1,21 +1,16 @@
 pipeline {
     agent any
     
-    tools {
-        // Définir l'outil Docker (assurez-vous que l'outil est configuré dans Jenkins)
-        dockerTool 'docker'
-    }
-
     environment {
-        // Initialiser la variable d'environnement PATH pour inclure Docker
-        PATH = "${tool('docker')}/bin:${env.PATH}"
+        // Indique à Jenkins d'utiliser le socket Docker partagé pour la communication Docker
+        DOCKER_HOST = 'unix:///var/run/docker.sock'
     }
     
     stages {
         stage('Initialize') {
             steps {
                 script {
-                    // Afficher la version de Docker pour vérifier l'installation
+                    // Vérification de la version de Docker
                     sh 'docker --version'
                 }
             }
@@ -23,7 +18,7 @@ pipeline {
 
         stage('Checkout SCM') {
             steps {
-                // Vérifier le code source depuis le dépôt
+                // Vérification du code source depuis le dépôt
                 checkout scm
             }
         }
@@ -31,9 +26,8 @@ pipeline {
         stage('Deploy') {
             steps {
                 script {
-                    // Utiliser le plugin Docker pour déployer l'image
-                    def dockerImage = docker.image('dontrebootme/microbot:v1')
-                    dockerImage.run('-d -p 9090:80')
+                    // Utilisation du plugin Docker Pipeline pour lancer un conteneur
+                    docker.image('dontrebootme/microbot:v1').run('-d -p 9090:80')
                 }
             }
         }
@@ -41,23 +35,23 @@ pipeline {
 
     post {
         always {
-            // Actions à réaliser à la fin du pipeline, peu importe le résultat
+            // Nettoyage de l'espace de travail à la fin du pipeline
             cleanWs()
         }
         success {
-            // Notifications en cas de succès
+            // Notification par email en cas de succès
             emailext (
                 to: 'dipriceiquannu-6304@yopmail.com',
                 subject: 'Build Success',
-                body: 'The build was successful!'
+                body: 'Le build a réussi!'
             )
         }
         failure {
-            // Notifications en cas d'échec
+            // Notification par email en cas d'échec
             emailext (
                 to: 'dipriceiquannu-6304@yopmail.com',
                 subject: 'Build Failed',
-                body: 'The build failed. Please check the Jenkins console output for more details.'
+                body: 'Le build a échoué. Veuillez vérifier la sortie de la console Jenkins pour plus de détails.'
             )
         }
     }
