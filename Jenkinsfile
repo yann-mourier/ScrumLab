@@ -33,7 +33,7 @@ pipeline {
             steps {
                 script {
                     // Utiliser le plugin Docker pour déployer l'image
-                    def dockerImage = docker.image('dontrebootme/microbot:v2')
+                    def dockerImage = docker.image('training/webapp:latest')
                     dockerImage.run('-d -p 9090:80')
                 }
             }
