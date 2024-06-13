@@ -1,15 +1,11 @@
 pipeline {
     agent {
-        docker {
-            image 'docker:stable'
-            args '-v /var/run/docker.sock:/var/run/docker.sock'
-        }
+        docker { image 'node:20.11.1-alpine3.19' }
     }
     stages {
-        stage('Test Docker') {
+        stage('Test') {
             steps {
-                sh 'docker --version'
-                sh 'docker run hello-world'
+                sh 'node --version'
             }
         }
     }
