@@ -46,7 +46,7 @@ pipeline {
         success {
             // Notifications en cas de succès
             emailext (
-                to: 'ton-email@example.com',
+                to: 'dipriceiquannu-6304@yopmail.com',
                 subject: 'Build Success',
                 body: 'The build was successful!'
             )
@@ -54,7 +54,7 @@ pipeline {
         failure {
             // Notifications en cas d'échec
             emailext (
-                to: 'ton-email@example.com',
+                to: 'dipriceiquannu-6304@yopmail.com',
                 subject: 'Build Failed',
                 body: 'The build failed. Please check the Jenkins console output for more details.'
             )
