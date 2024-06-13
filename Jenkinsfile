@@ -44,22 +44,6 @@ pipeline {
             }
         }
     }
-
-    post {
-        always {
-                cleanWs()
-            }
-        success {
-            emailext body: 'The build was successful!',
-                     subject: 'Build Success',
-                     to: 'yann.mourier26@gmail.com'
-        }
-        failure {
-            emailext body: 'The build failed. Please check the Jenkins console output for more details.',
-                     subject: 'Build Failed',
-                     to: 'yann.mourier26@gmail.com'
-        }
-    }
     triggers {
         githubPush()
     }
