@@ -52,7 +52,7 @@ pipeline {
             }
         }
         success {
-            emailext body: 'The build was successful !',
+            emailext body: 'The build was successful!',
                      subject: 'Build Success',
                      to: 'yann.mourier26@gmail.com'
         }
