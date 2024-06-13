@@ -39,7 +39,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 script {
-                    def dockerImage = docker.image('wordpress')
+                    def dockerImage = docker.image('nginx')
                     dockerImage.pull()
                     dockerImage.run('-d --name webapp -p ${WEBAPP_PORT}:80')
                 }
@@ -59,7 +59,7 @@ pipeline {
                         error 'Impossible d\'accéder à l\'application déployée'
                     }
 
-                    def appResponse = sh(script: "curl -sSf ${WEBAPP_HOST}:${WEBAPP_PORT} | grep 'webapp'", returnStatus: true)
+                    def appResponse = sh(script: "curl -sSf ${WEBAPP_HOST}:${WEBAPP_PORT} | grep 'nginx'", returnStatus: true)
                     if (appResponse != 0) {
                         error 'L\'application ne renvoie pas la réponse attendue'
                     }
