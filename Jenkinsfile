@@ -5,6 +5,7 @@ pipeline {
         PATH = "${tool 'docker'}/bin:${env.PATH}"
         DOCKER_HOST = 'unix:///var/run/docker.sock'
         WEBAPP_PORT = '9090'
+        WEBAPP_HOST = 'http://home.magotechlab.ovh'
     }
     
     tools {
@@ -53,12 +54,12 @@ pipeline {
                         error 'Le conteneur webapp n\'est pas en cours d\'exécution'
                     }
 
-                    def response = sh(script: "curl -sSf http://localhost:${WEBAPP_PORT} >/dev/null && echo 'OK' || echo 'FAIL'", returnStatus: true)
+                    def response = sh(script: "curl -sSf ${WEBAPP_HOST}:${WEBAPP_PORT} >/dev/null && echo 'OK' || echo 'FAIL'", returnStatus: true)
                     if (response != 0) {
                         error 'Impossible d\'accéder à l\'application déployée'
                     }
 
-                    def appResponse = sh(script: "curl -sSf http://localhost:${WEBAPP_PORT} | grep 'wordpress'", returnStatus: true)
+                    def appResponse = sh(script: "curl -sSf ${WEBAPP_HOST}:${WEBAPP_PORT} | grep 'wordpress'", returnStatus: true)
                     if (appResponse != 0) {
                         error 'L\'application ne renvoie pas la réponse attendue'
                     }
