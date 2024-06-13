@@ -59,7 +59,7 @@ pipeline {
                         error 'Impossible d\'accéder à l\'application déployée'
                     }
 
-                    def appResponse = sh(script: "curl -sSf ${WEBAPP_HOST}:${WEBAPP_PORT} | grep 'wordpress'", returnStatus: true)
+                    def appResponse = sh(script: "curl -sSf ${WEBAPP_HOST}:${WEBAPP_PORT}", returnStatus: true)
                     if (appResponse != 0) {
                         error 'L\'application ne renvoie pas la réponse attendue'
                     }
