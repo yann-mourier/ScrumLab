@@ -33,7 +33,7 @@ pipeline {
             steps {
                 script {
                     // Utilisation du plugin Docker pour déployer une version spécifique de l'image
-                    def dockerImage = docker.image('nginx')
+                    def dockerImage = docker.image('wordpress')
                     dockerImage.pull()  // Optionnel : télécharge l'image explicitement
                     dockerImage.run('-d -p 9090:80')
                 }
