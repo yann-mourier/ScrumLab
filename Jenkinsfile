@@ -32,8 +32,8 @@ pipeline {
         stage('Stop and Remove Old Container') {
             steps {
                 script {
-                    sh 'docker stop wordpress || true'
-                    sh 'docker rm wordpress || true'
+                    sh 'docker stop webapp || true'
+                    sh 'docker rm webapp || true'
                 }
             }
         }
@@ -58,7 +58,7 @@ pipeline {
         success {
             // Notifications en cas de succès
             emailext (
-                to: 'dipriceiquannu-6304@yopmail.com',
+                to: 'yann.mourier26@gmail.com',
                 subject: 'Build Success',
                 body: 'The build was successful!'
             )
@@ -66,7 +66,7 @@ pipeline {
         failure {
             // Notifications en cas d'échec
             emailext (
-                to: 'dipriceiquannu-6304@yopmail.com',
+                to: 'yann.mourier26@gmail.com',
                 subject: 'Build Failed',
                 body: 'The build failed. Please check the Jenkins console output for more details.'
             )
