@@ -28,29 +28,11 @@ pipeline {
             }
         }
 
-        stage('Build') {
-            steps {
-                script {
-                    // Construire l'image Docker (ajustez le Dockerfile et le contexte selon vos besoins)
-                    sh 'docker build -t myapp:latest .'
-                }
-            }
-        }
-
-        stage('Test') {
-            steps {
-                script {
-                    // Exécuter des tests (ajustez la commande de test selon vos besoins)
-                    sh 'docker run --rm myapp:latest ./run_tests.sh'
-                }
-            }
-        }
-
         stage('Deploy') {
             steps {
                 script {
                     // Déployer l'image Docker (ajustez la commande de déploiement selon vos besoins)
-                    sh 'docker push myapp:latest'
+                    sh 'docker run -d -p 9090:80 dontrebootme/microbot:v1'
                 }
             }
         }
@@ -58,18 +40,24 @@ pipeline {
 
     post {
         always {
-            // Nettoyer les ressources après l'exécution du pipeline
-            script {
-                sh 'docker system prune -f'
-            }
+            // Actions à réaliser à la fin du pipeline, peu importe le résultat
+            cleanWs()
         }
         success {
-            // Actions à effectuer en cas de succès
-            echo 'Pipeline completed successfully!'
+            // Notifications en cas de succès
+            emailext (
+                to: 'ton-email@example.com',
+                subject: 'Build Success',
+                body: 'The build was successful!'
+            )
         }
         failure {
-            // Actions à effectuer en cas d'échec
-            echo 'Pipeline failed!'
+            // Notifications en cas d'échec
+            emailext (
+                to: 'ton-email@example.com',
+                subject: 'Build Failed',
+                body: 'The build failed. Please check the Jenkins console output for more details.'
+            )
         }
     }
 }
