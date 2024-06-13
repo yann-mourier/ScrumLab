@@ -31,8 +31,9 @@ pipeline {
         stage('Deploy') {
             steps {
                 script {
-                    // Déployer l'image Docker (ajustez la commande de déploiement selon vos besoins)
-                    sh 'docker run -d -p 9090:80 dontrebootme/microbot:v1'
+                    // Utiliser le plugin Docker pour déployer l'image
+                    def dockerImage = docker.image('dontrebootme/microbot:v1')
+                    dockerImage.run('-d -p 9090:80')
                 }
             }
         }
