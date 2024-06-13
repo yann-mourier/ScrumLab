@@ -1,13 +1,21 @@
 pipeline {
-    agent any
-    environment {
-        NODE_ENV = 'production'
+    agent {
+        docker {
+            image 'node:14'  // Utilisez l'image Docker avec les outils nécessaires
+            args '-v /var/run/docker.sock:/var/run/docker.sock'  // Montez le socket Docker dans le conteneur agent
+        }
     }
     stages {
-        stage('Deploy Docker Image') {
+        stage('Build') {
+            steps {
+                sh 'npm install'
+                sh 'npm run build'
+            }
+        }
+        stage('Deploy') {
             steps {
                 script {
-                    // Exécuter le conteneur Docker
+                    // Exécuter le conteneur Docker depuis le conteneur Jenkins
                     sh 'docker run -d -p 9090:80 dontrebootme/microbot'
                 }
             }
@@ -15,11 +23,9 @@ pipeline {
     }
     post {
         always {
-            // Actions à réaliser à la fin du pipeline, peu importe le résultat
             cleanWs()
         }
         success {
-            // Notifications en cas de succès
             emailext (
                 to: 'nijunnanupra-6905@yopmail.com',
                 subject: 'Build Success',
@@ -27,7 +33,6 @@ pipeline {
             )
         }
         failure {
-            // Notifications en cas d'échec
             emailext (
                 to: 'nijunnanupra-6905@yopmail.com',
                 subject: 'Build Failed',
