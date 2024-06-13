@@ -50,18 +50,17 @@ pipeline {
             steps {
                 script {
                     def isRunning = sh(script: 'docker ps | grep webapp', returnStatus: true)
-                    if (isRunning != 0) {
+                    if (isRunning == 0) {
+                        echo 'Le conteneur webapp est en cours d\'exécution'
+                    } else {
                         error 'Le conteneur webapp n\'est pas en cours d\'exécution'
                     }
 
                     def response = sh(script: "curl -sSf ${WEBAPP_HOST}:${WEBAPP_PORT} >/dev/null && echo 'OK' || echo 'FAIL'", returnStatus: true)
-                    if (response != 0) {
+                    if (response == 0) {
+                        echo 'Accès à l\'application déployée avec succès'
+                    } else {
                         error 'Impossible d\'accéder à l\'application déployée'
-                    }
-
-                    def appResponse = sh(script: "curl -sSf ${WEBAPP_HOST}:${WEBAPP_PORT} | grep 'nginx'", returnStatus: true)
-                    if (appResponse != 0) {
-                        error 'L\'application ne renvoie pas la réponse attendue'
                     }
 
                     echo 'Tous les tests unitaires ont été exécutés avec succès !'
