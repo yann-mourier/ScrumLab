@@ -5,7 +5,7 @@ pipeline {
         PATH = "${tool 'docker'}/bin:${env.PATH}"
         DOCKER_HOST = 'unix:///var/run/docker.sock'
         WEBAPP_PORT = '9090'
-        WEBAPP_HOST = 'http://home.magotechlab.ovh'
+        WEBAPP_HOST = 'http://home.magotechlabs.ovh'
     }
     
     tools {
@@ -49,7 +49,7 @@ pipeline {
         stage('Unit Tests') {
             steps {
                 script {
-                    def isRunning = sh(script: 'docker ps | grep webapp', returnStatus: true)
+                    def isRunning = sh(script: 'docker ps | grep webapps', returnStatus: true)
                     if (isRunning == 0) {
                         echo 'Le conteneur webapp est en cours d\'exécution'
                     } else {
