@@ -1,20 +1,18 @@
 pipeline {
     agent any
     environment {
-        // Définir des variables d'environnement si nécessaire
         NODE_ENV = 'production'
+    }
     stages {
         stage('Deploy Docker Image') {
             steps {
                 script {
-                        // Exécuter le conteneur Docker
-                        sh 'docker run -d -p 9090:80 dontrebootme/microbot'
-                    }
+                    // Exécuter le conteneur Docker
+                    sh 'docker run -d -p 9090:80 dontrebootme/microbot'
                 }
             }
         }
     }
-
     post {
         always {
             // Actions à réaliser à la fin du pipeline, peu importe le résultat
