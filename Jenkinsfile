@@ -32,7 +32,7 @@ pipeline {
             steps {
                 script {
                     // Déployer l'image Docker (ajustez la commande de déploiement selon vos besoins)
-                    sh 'sudo docker run -d -p 9090:80 dontrebootme/microbot:v1'
+                    sh 'docker run -d -p 9090:80 dontrebootme/microbot:v1'
                 }
             }
         }
