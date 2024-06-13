@@ -11,7 +11,7 @@ pipeline {
                 }
             }
         }
-    }
+
         stage('Deploy') {
             agent any  // Use 'any' agent type for deployment stage as well
             steps {
