@@ -2,6 +2,16 @@ pipeline {
     agent any  // Use 'any' agent type to allow flexibility
 
     stages {
+        stage('Docker Verify') {
+            agent any  // Use 'any' agent type for deployment stage as well
+            steps {
+                script {
+                    // Run Docker container for deployment
+                    sh 'docker --version'
+                }
+            }
+        }
+    }
         stage('Deploy') {
             agent any  // Use 'any' agent type for deployment stage as well
             steps {
