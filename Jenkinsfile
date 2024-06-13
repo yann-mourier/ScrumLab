@@ -1,10 +1,6 @@
 pipeline {
-    agent {
-        docker {
-            image 'docker:stable'
-            args '-v /var/run/docker.sock:/var/run/docker.sock'
-        }
-    }
+    agent any  // Use 'any' agent type to allow flexibility
+
     stages {
         stage('Docker Verify') {
             agent any  // Use 'any' agent type for deployment stage as well
