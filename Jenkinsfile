@@ -7,7 +7,7 @@ pipeline {
     }
     
     tools {
-        dockerTool name: 'docker', installationName: 'docker'
+        dockerTool 'docker' // Assurez-vous que 'docker' correspond à l'installation dans Jenkins
     }
     
     stages {
@@ -47,8 +47,7 @@ pipeline {
 
     post {
         always {
-
-                cleanWs()
+            cleanWs()
         }
         success {
             emailext body: 'The build was successful!',
