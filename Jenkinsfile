@@ -56,7 +56,7 @@ pipeline {
                         error 'Le conteneur webapp n\'est pas en cours d\'exécution'
                     }
 
-                    def response = sh(script: "curl -sSf ${WEBAPP_HOST}:${WEBAPP_PORT} >/dev/null && echo 'OK' || echo 'FAIL'", returnStatus: true)
+                    def response = sh(script: "curl -sSf ${WEBAPP_HOST}:${WEBAPP_PORT}", returnStatus: true)
                     if (response == 0) {
                         echo 'Accès à l\'application déployée avec succès'
                     } else {
