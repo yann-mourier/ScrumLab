@@ -47,9 +47,8 @@ pipeline {
 
     post {
         always {
-            node {
+
                 cleanWs()
-            }
         }
         success {
             emailext body: 'The build was successful!',
