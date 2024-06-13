@@ -7,7 +7,6 @@ pipeline {
     }
     
     tools {
-        // Définir l'outil Docker (assurez-vous que l'outil est configuré dans Jenkins)
         dockerTool name: 'docker', installationName: 'docker'
     }
     
@@ -15,7 +14,6 @@ pipeline {
         stage('Initialize') {
             steps {
                 script {
-                    // Afficher la version de Docker pour vérifier l'installation
                     sh 'docker --version'
                 }
             }
@@ -23,7 +21,6 @@ pipeline {
 
         stage('Checkout SCM') {
             steps {
-                // Vérifier le code source depuis le dépôt
                 checkout scm
             }
         }
@@ -40,9 +37,8 @@ pipeline {
         stage('Deploy') {
             steps {
                 script {
-                    // Utilisation du plugin Docker pour déployer une version spécifique de l'image
                     def dockerImage = docker.image('wordpress')
-                    dockerImage.pull()  // Optionnel : télécharge l'image explicitement
+                    dockerImage.pull()
                     dockerImage.run('-d --name webapp -p 9090:80')
                 }
             }
@@ -51,7 +47,9 @@ pipeline {
 
     post {
         always {
-            cleanWs()
+            node {
+                cleanWs()
+            }
         }
         success {
             emailext body: 'The build was successful!',
