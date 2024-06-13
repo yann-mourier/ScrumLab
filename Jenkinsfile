@@ -5,7 +5,7 @@ pipeline {
         PATH = "${tool 'docker'}/bin:${env.PATH}"
         DOCKER_HOST = 'unix:///var/run/docker.sock'
         WEBAPP_PORT = '9090'
-        WEBAPP_HOST = 'http://home.magotechlabs.ovh'
+        WEBAPP_HOST = 'http://home.magotechlab.ovh'
     }
     
     tools {
