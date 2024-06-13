@@ -2,19 +2,6 @@ pipeline {
     agent any  // Use 'any' agent type to allow flexibility
 
     stages {
-        stage('Build') {
-            agent {
-                docker {
-                    image 'node:14'  // Specify the Docker image with necessary tools
-                    args '-v /var/run/docker.sock:/var/run/docker.sock'  // Mount Docker socket if needed
-                }
-            }
-            steps {
-                sh 'npm install'
-                sh 'npm run build'
-            }
-        }
-
         stage('Deploy') {
             agent any  // Use 'any' agent type for deployment stage as well
             steps {
