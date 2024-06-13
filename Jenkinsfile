@@ -32,8 +32,9 @@ pipeline {
         stage('Deploy') {
             steps {
                 script {
-                    // Utiliser le plugin Docker pour déployer l'image
-                    def dockerImage = docker.image('training/webapp:latest')
+                    // Utilisation du plugin Docker pour déployer une version spécifique de l'image
+                    def dockerImage = docker.image('dontrebootme/microbot:latest')
+                    dockerImage.pull()  // Optionnel : télécharge l'image explicitement
                     dockerImage.run('-d -p 9090:80')
                 }
             }
