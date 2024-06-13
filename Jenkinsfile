@@ -68,8 +68,11 @@ pipeline {
             emailext (
                 to: 'yann.mourier26@gmail.com',
                 subject: 'Build Failed',
-                body: 'The build failed ! Please check the Jenkins console output for more details.'
+                body: 'The build failed. Please check the Jenkins console output for more details.'
             )
         }
+    }
+    triggers {
+        githubPush()
     }
 }
